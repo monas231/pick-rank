@@ -1,3 +1,10 @@
+### 비밀 정보 — 저장소에 올리지 않는다
+# DB 비밀번호·키를 담은 로컬 전용 문서
+*.local.md
+.env
+.env.*
+!.env.example
+
 ### macOS
 # Finder metadata
 .DS_Store
@@ -6,7 +13,7 @@
 ._*
 
 # Custom folder icons
-Icon
+Icon
 
 # Volume root files
 .DocumentRevisions-V100
