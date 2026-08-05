@@ -26,13 +26,15 @@ update public.profiles set is_admin = true
 
 ## 앱 연결
 
-프로젝트 설정 > API 에서 **Project URL** 과 **anon public key** 를 복사해 실행 시 넘긴다.
+접속 값은 [CONNECTION.md](CONNECTION.md) 에 있다.
 
 ```bash
-flutter run -d chrome --dart-define=SUPABASE_URL=https://xxxx.supabase.co --dart-define=SUPABASE_ANON_KEY=eyJ...
+cd pick_rank && flutter run -d chrome --dart-define=SUPABASE_URL=https://bxzslhnczspxnhfngxqh.supabase.co --dart-define=SUPABASE_PUBLISHABLE_KEY=sb_publishable_TFBeG5wHC0trMxg0-NrAXg_loB28qMT
 ```
 
-anon key는 클라이언트에 박히는 공개용 키라 노출돼도 되지만, **service_role key는 절대 앱에 넣지 않는다** (RLS를 통째로 우회한다).
+publishable key는 클라이언트에 박히도록 만들어진 공개용 키라 노출돼도 된다. 데이터를 지키는 것은
+이 키가 아니라 **RLS 정책**(0003)이다. 반면 **secret key(옛 service_role)는 RLS를 통째로 우회하므로
+앱에 절대 넣지 않는다.**
 
 ## 화면이 읽는 뷰
 

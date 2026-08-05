@@ -1,5 +1,11 @@
 # Supabase 접속 정보
 
+| 항목 | 값 |
+|---|---|
+| Project URL | `https://bxzslhnczspxnhfngxqh.supabase.co` |
+| 프로젝트 ref | `bxzslhnczspxnhfngxqh` |
+| 대시보드 | https://supabase.com/dashboard/project/bxzslhnczspxnhfngxqh |
+
 ## 데이터베이스 비밀번호
 
 ```
@@ -13,31 +19,36 @@ DZjlGPaTRpT5KhCX
 
 **Flutter 앱에는 들어가지 않는다.** 앱은 아래 anon key만 쓴다.
 
-## 앱이 쓰는 값 (아직 못 받음 — 채워넣을 것)
-
-Supabase 대시보드 > Project Settings > API 에서 복사한다.
+## 앱이 쓰는 값 — publishable key
 
 ```
-SUPABASE_URL       = https://________.supabase.co
-SUPABASE_ANON_KEY  = eyJ...
+SUPABASE_URL              = https://bxzslhnczspxnhfngxqh.supabase.co
+SUPABASE_PUBLISHABLE_KEY  = sb_publishable_TFBeG5wHC0trMxg0-NrAXg_loB28qMT
 ```
 
-실행할 때 이렇게 넘긴다.
+> 이 키는 **클라이언트에 박히도록 만들어진 공개용 키**다. 웹으로 배포하면 브라우저에서
+> 누구나 볼 수 있고, 그게 정상이다. 데이터를 지키는 것은 이 키가 아니라 **RLS 정책**(0003)이다.
+>
+> Supabase가 키 이름을 `anon key` → `publishable key` 로 바꾸는 중이다. 앱의 `Env`는
+> `SUPABASE_ANON_KEY` / `SUPABASE_PUBLISHABLE_KEY` 둘 다 받는다.
+>
+> ⚠️ **`secret key`(예전 이름 service_role)는 RLS를 통째로 우회한다.** 앱에도 이 문서에도 넣지 않는다.
+
+실행:
 
 ```bash
-cd pick_rank && flutter run -d chrome --dart-define=SUPABASE_URL=<위 URL> --dart-define=SUPABASE_ANON_KEY=<위 anon key>
+cd pick_rank && flutter run -d chrome --dart-define=SUPABASE_URL=https://bxzslhnczspxnhfngxqh.supabase.co --dart-define=SUPABASE_PUBLISHABLE_KEY=sb_publishable_TFBeG5wHC0trMxg0-NrAXg_loB28qMT
 ```
-
-> anon key는 클라이언트에 박히는 공개용 키라 노출돼도 된다.
-> **service_role key는 RLS를 통째로 우회하므로 앱에도 이 파일에도 넣지 않는다.**
 
 ## DB 직접 접속 (PostgreSQL 클라이언트를 깐 뒤)
 
-대시보드 > Project Settings > Database > Connection string 에서 정확한 호스트를 확인한다.
-
 ```bash
-psql "postgresql://postgres:DZjlGPaTRpT5KhCX@db.________.supabase.co:5432/postgres"
+psql "postgresql://postgres:DZjlGPaTRpT5KhCX@db.bxzslhnczspxnhfngxqh.supabase.co:5432/postgres"
 ```
+
+⚠️ 위는 **직접 접속(Direct connection)** 형식이다. 프로젝트에 따라 IPv4로는 안 붙고
+**Session pooler** 주소를 써야 할 수 있다. 안 되면 대시보드 > Project Settings > Database >
+**Connection string** 에서 실제 값을 복사할 것 (호스트·포트·사용자명이 다르다).
 
 ## 비밀번호를 새로 발급하려면
 
